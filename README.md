@@ -37,3 +37,14 @@ python -m http.server 5500
 ```
 
 또는 VS Code Live Server 같은 정적 서버를 사용해도 됩니다.
+
+## Vercel 배포
+
+이 프로젝트는 정적 사이트라서 Vercel에 바로 올릴 수 있습니다.
+
+1. GitHub 저장소를 Vercel에 Import 합니다.
+2. Framework Preset은 `Other` 또는 자동 감지 그대로 둡니다.
+3. Build Command는 비워 두고, Output Directory도 비워 둡니다.
+4. 배포 후 Supabase Authentication의 Redirect URL에 Vercel 배포 주소를 추가합니다.
+
+관리자 매직 링크 로그인을 쓰려면 Supabase 쪽 Redirect URL 설정이 반드시 맞아야 합니다.

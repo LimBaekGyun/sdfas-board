@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SDFAS Board</title>
+  <meta
+    name="description"
+    content="Supabase를 이용해 만든 간단한 게시판입니다. 글 작성, 목록 조회, 관리자 삭제 기능을 제공합니다."
+  >
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Noto+Sans+KR:wght@400;500;700&display=swap"
+    rel="stylesheet"
+  >
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="page-shell">
+    <header class="hero">
+      <div class="hero-copy">
+        <p class="eyebrow">Supabase + Static Board</p>
+        <h1>SDFAS Board</h1>
+        <p class="hero-text">
+          새 글을 바로 올리고, 최신 글을 확인하고, 관리자 계정으로만 삭제할 수 있는
+          간단한 게시판입니다.
+        </p>
+      </div>
+
+      <div class="hero-stats">
+        <article class="stat-card">
+          <span class="stat-label">게시글 수</span>
+          <strong id="stat-count">0</strong>
+        </article>
+        <article class="stat-card">
+          <span class="stat-label">관리자 상태</span>
+          <strong id="auth-badge">로그아웃</strong>
+        </article>
+        <article class="stat-card">
+          <span class="stat-label">마지막 새로고침</span>
+          <strong id="stat-refresh">대기 중</strong>
+        </article>
+      </div>
+    </header>
+
+    <main class="board-grid">
+      <section class="panel compose-panel">
+        <div class="panel-head">
+          <div>
+            <p class="section-kicker">Write</p>
+            <h2>게시글 작성</h2>
+          </div>
+          <button class="ghost-button" id="refresh-button" type="button">새로고침</button>
+        </div>
+
+        <form id="post-form" class="post-form">
+          <label class="field">
+            <span>작성자</span>
+            <input id="author-input" name="author" type="text" maxlength="24" placeholder="이름 또는 닉네임" required>
+          </label>
+
+          <label class="field">
+            <span>제목</span>
+            <input id="title-input" name="title" type="text" maxlength="80" placeholder="제목을 입력하세요" required>
+          </label>
+
+          <label class="field">
+            <span>내용</span>
+            <textarea
+              id="content-input"
+              name="content"
+              rows="7"
+              maxlength="1000"
+              placeholder="내용을 입력하세요"
+              required
+            ></textarea>
+          </label>
+
+          <div class="form-actions">
+            <button class="primary-button" id="submit-button" type="submit">게시글 올리기</button>
+            <p id="form-status" class="status-text">Supabase 연결 상태를 확인하는 중입니다.</p>
+          </div>
+        </form>
+      </section>
+
+      <aside class="panel admin-panel">
+        <div class="panel-head">
+          <div>
+            <p class="section-kicker">Admin</p>
+            <h2>관리자 로그인</h2>
+          </div>
+        </div>
+
+        <form id="auth-form" class="auth-form">
+          <label class="field">
+            <span>관리자 이메일</span>
+            <input id="email-input" name="email" type="email" placeholder="관리자 이메일" required>
+          </label>
+
+          <div class="form-actions compact">
+            <button class="primary-button" id="login-button" type="submit">매직 링크 보내기</button>
+            <button class="ghost-button" id="logout-button" type="button" hidden>로그아웃</button>
+          </div>
+        </form>
+
+        <p id="auth-status" class="status-text">
+          관리자 이메일로 로그인하면 삭제 버튼이 활성화됩니다.
+        </p>
+
+        <div class="admin-note">
+          <strong>권한 규칙</strong>
+          <p>읽기와 작성은 공개, 삭제는 지정한 관리자 이메일만 허용됩니다.</p>
+        </div>
+      </aside>
+
+      <section class="panel list-panel">
+        <div class="panel-head list-head">
+          <div>
+            <p class="section-kicker">Board</p>
+            <h2>최신 게시글</h2>
+          </div>
+
+          <label class="search-box">
+            <span class="visually-hidden">검색</span>
+            <input id="search-input" type="search" placeholder="제목, 내용, 작성자 검색">
+          </label>
+        </div>
+
+        <p id="list-status" class="status-text subtle">목록을 불러오는 중입니다.</p>
+        <div id="empty-state" class="empty-state" hidden>아직 등록된 게시글이 없습니다.</div>
+        <div id="post-list" class="post-list"></div>
+      </section>
+    </main>
+  </div>
+
+  <script src="config.js"></script>
+  <script type="module" src="app.js"></script>
+</body>
+</html>
